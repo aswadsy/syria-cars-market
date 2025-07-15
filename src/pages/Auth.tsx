@@ -26,7 +26,17 @@ const Auth = () => {
         navigate("/dashboard");
       }
     };
+    
+    // Also listen for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session && event === 'SIGNED_IN') {
+        navigate("/dashboard");
+      }
+    });
+
     checkUser();
+    
+    return () => subscription.unsubscribe();
   }, [navigate]);
 
   const handleSignUp = async (e: React.FormEvent) => {
@@ -81,19 +91,34 @@ const Auth = () => {
       });
 
       if (error) {
+        let errorMessage = "حدث خطأ أثناء تسجيل الدخول";
+        
+        if (error.message.includes("Invalid login credentials")) {
+          errorMessage = "البريد الإلكتروني أو كلمة المرور غير صحيحة";
+        } else if (error.message.includes("Email not confirmed")) {
+          errorMessage = "يرجى تأكيد البريد الإلكتروني أولاً";
+        } else if (error.message.includes("Too many requests")) {
+          errorMessage = "محاولات كثيرة، يرجى المحاولة بعد قليل";
+        }
+        
         toast({
           variant: "destructive",
           title: "خطأ في تسجيل الدخول",
-          description: error.message,
+          description: errorMessage,
         });
       } else {
-        navigate("/dashboard");
+        toast({
+          title: "تم تسجيل الدخول بنجاح",
+          description: "مرحباً بك!",
+        });
+        // Navigation will be handled by the auth state listener
       }
-    } catch (error) {
+    } catch (error: any) {
+      console.error("Sign in error:", error);
       toast({
         variant: "destructive",
         title: "خطأ في تسجيل الدخول",
-        description: "حدث خطأ أثناء تسجيل الدخول",
+        description: "حدث خطأ غير متوقع، يرجى المحاولة مرة أخرى",
       });
     } finally {
       setLoading(false);
