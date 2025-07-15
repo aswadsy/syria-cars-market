@@ -43,13 +43,13 @@ const Navbar = () => {
 
           {/* أزرار تسجيل الدخول */}
           <div className="hidden md:flex items-center space-x-reverse space-x-4">
-            <Button variant="outline" className="flex items-center space-x-reverse space-x-2">
+            <Button variant="outline" className="flex items-center space-x-reverse space-x-2" onClick={() => window.location.href = '/auth'}>
               <User className="h-4 w-4" />
               <span>تسجيل الدخول</span>
             </Button>
-            <Button className="btn-hero flex items-center space-x-reverse space-x-2">
+            <Button className="btn-hero flex items-center space-x-reverse space-x-2" onClick={() => window.location.href = '/dashboard'}>
               <Plus className="h-4 w-4" />
-              <span>أضف إعلان</span>
+              <span>لوحة التحكم</span>
             </Button>
           </div>
 
@@ -101,11 +101,11 @@ const Navbar = () => {
                 من نحن
               </a>
               <div className="flex flex-col space-y-2 px-3 pt-4">
-                <Button variant="outline" className="w-full">
+                <Button variant="outline" className="w-full" onClick={() => window.location.href = '/auth'}>
                   تسجيل الدخول
                 </Button>
-                <Button className="btn-hero w-full">
-                  أضف إعلان
+                <Button className="btn-hero w-full" onClick={() => window.location.href = '/dashboard'}>
+                  لوحة التحكم
                 </Button>
               </div>
             </div>

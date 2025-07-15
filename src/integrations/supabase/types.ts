@@ -14,16 +14,156 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      admin_settings: {
+        Row: {
+          commission_buy: number
+          commission_rent: number
+          commission_sale: number
+          id: string
+          updated_at: string
+          updated_by: string | null
+        }
+        Insert: {
+          commission_buy?: number
+          commission_rent?: number
+          commission_sale?: number
+          id?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Update: {
+          commission_buy?: number
+          commission_rent?: number
+          commission_sale?: number
+          id?: string
+          updated_at?: string
+          updated_by?: string | null
+        }
+        Relationships: []
+      }
+      cars: {
+        Row: {
+          brand: string
+          city: string
+          condition: string
+          created_at: string
+          description: string | null
+          id: string
+          images: string[] | null
+          kilometers: number | null
+          model: string
+          operation_type: string
+          price: number
+          status: string
+          title: string
+          updated_at: string
+          user_id: string
+          whatsapp_number: string | null
+          year: number
+        }
+        Insert: {
+          brand: string
+          city: string
+          condition: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          images?: string[] | null
+          kilometers?: number | null
+          model: string
+          operation_type: string
+          price: number
+          status?: string
+          title: string
+          updated_at?: string
+          user_id: string
+          whatsapp_number?: string | null
+          year: number
+        }
+        Update: {
+          brand?: string
+          city?: string
+          condition?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          images?: string[] | null
+          kilometers?: number | null
+          model?: string
+          operation_type?: string
+          price?: number
+          status?: string
+          title?: string
+          updated_at?: string
+          user_id?: string
+          whatsapp_number?: string | null
+          year?: number
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          city: string | null
+          created_at: string
+          full_name: string
+          id: string
+          phone: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          city?: string | null
+          created_at?: string
+          full_name: string
+          id?: string
+          phone?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          city?: string | null
+          created_at?: string
+          full_name?: string
+          id?: string
+          phone?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _user_id: string
+          _role: Database["public"]["Enums"]["app_role"]
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +290,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
